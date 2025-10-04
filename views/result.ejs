@@ -1,0 +1,13 @@
+<h1>🌧️ Prediction Result for <%= name %></h1>
+<p><strong>Rain Probability:</strong> <%= probability %></p>
+<p><strong>Will it Rain?</strong> <%= rain %></p>
+
+<h3>Entered Data:</h3>
+<ul>
+  <% Object.keys(input).forEach(key => { %>
+    <li><%= key %>: <%= input[key] %></li>
+  <% }) %>
+</ul>
+
+<a href="/prediction">🔁 Predict Again</a> |
+<a href="/dashboard">🏠 Back to Dashboard</a>
