@@ -1,16 +1,402 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Signup</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherCast - Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196f3;
+            --secondary-color: #64b5f6;
+            --accent-color: #ff6b6b;
+            --success-color: #4caf50;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #141e30, #243b55);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: container-appear 0.6s ease-out;
+        }
+
+        @keyframes container-appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+            animation: logo-spin 20s linear infinite;
+        }
+
+        @keyframes logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .brand-name {
+            font-size: 2.2rem;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .form-floating {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-radius: 15px !important;
+            padding: 15px !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            transition: all 0.4s ease;
+            color: #fff !important;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.3) !important;
+        }
+
+        .form-floating label {
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding-left: 15px !important;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-signup {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-signup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-signup:hover::before {
+            left: 100%;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .login-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .login-link a:hover::after {
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .form-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .weather-icon {
+            margin-right: 12px;
+            color: #fff;
+            font-size: 1.8rem;
+            animation: weather-icon-float 3s ease-in-out infinite;
+        }
+
+        @keyframes weather-icon-float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .password-requirements {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .requirement i {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .valid {
+            color: var(--success-color);
+        }
+    </style>
 </head>
 <body>
-    <h2>Signup</h2>
-    <form action="/signup" method="POST">
-        <input type="text" name="name" placeholder="Name" required /><br/>
-        <input type="email" name="email" placeholder="Email" required /><br/>
-        <input type="password" name="password" placeholder="Password" required /><br/>
-        <button type="submit">Signup</button>
-    </form>
-    <p>Already have an account? <a href="/login">Login</a></p>
+    <div class="container">
+        <div class="signup-container">
+            <div class="logo-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/4052/4052984.png" alt="Weather Logo" class="logo">
+                <div class="brand-name">
+                    <i class="fas fa-cloud-sun weather-icon"></i>WeatherCast
+                </div>
+            </div>
+            
+            <form action="/signup" method="POST" class="needs-validation" novalidate>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                    <label for="name"><i class="fas fa-user me-2"></i>Full Name</label>
+                </div>
+                
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                    <label for="email"><i class="fas fa-envelope me-2"></i>Email Address</label>
+                </div>
+                
+                <div class="form-floating position-relative">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required minlength="8">
+                    <label for="password"><i class="fas fa-lock me-2"></i>Password</label>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                </div>
+                
+                <div class="password-requirements">
+                    <div class="requirement" id="length">
+                        <i class="fas fa-circle"></i>
+                        At least 8 characters
+                    </div>
+                    <div class="requirement" id="uppercase">
+                        <i class="fas fa-circle"></i>
+                        One uppercase letter
+                    </div>
+                    <div class="requirement" id="lowercase">
+                        <i class="fas fa-circle"></i>
+                        One lowercase letter
+                    </div>
+                    <div class="requirement" id="number">
+                        <i class="fas fa-circle"></i>
+                        One number
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-signup">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </button>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="/login">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password visibility toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Password requirements validation
+        const password = document.getElementById('password');
+        const requirements = {
+            length: document.getElementById('length'),
+            uppercase: document.getElementById('uppercase'),
+            lowercase: document.getElementById('lowercase'),
+            number: document.getElementById('number')
+        };
+
+        password.addEventListener('input', function() {
+            const value = this.value;
+            
+            // Check length
+            if (value.length >= 8) {
+                requirements.length.classList.add('valid');
+                requirements.length.querySelector('i').classList.remove('fa-circle');
+                requirements.length.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                requirements.length.classList.remove('valid');
+                requirements.length.querySelector('i').classList.remove('fa-check-circle');
+                requirements.length.querySelector('i').classList.add('fa-circle');
+            }
+            
+            // Check uppercase
+            if (/[A-Z]/.test(value)) {
+                requirements.uppercase.classList.add('valid');
+                requirements.uppercase.querySelector('i').classList.remove('fa-circle');
+                requirements.uppercase.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                requirements.uppercase.classList.remove('valid');
+                requirements.uppercase.querySelector('i').classList.remove('fa-check-circle');
+                requirements.uppercase.querySelector('i').classList.add('fa-circle');
+            }
+            
+            // Check lowercase
+            if (/[a-z]/.test(value)) {
+                requirements.lowercase.classList.add('valid');
+                requirements.lowercase.querySelector('i').classList.remove('fa-circle');
+                requirements.lowercase.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                requirements.lowercase.classList.remove('valid');
+                requirements.lowercase.querySelector('i').classList.remove('fa-check-circle');
+                requirements.lowercase.querySelector('i').classList.add('fa-circle');
+            }
+            
+            // Check number
+            if (/[0-9]/.test(value)) {
+                requirements.number.classList.add('valid');
+                requirements.number.querySelector('i').classList.remove('fa-circle');
+                requirements.number.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                requirements.number.classList.remove('valid');
+                requirements.number.querySelector('i').classList.remove('fa-check-circle');
+                requirements.number.querySelector('i').classList.add('fa-circle');
+            }
+        });
+
+        // Form validation
+        (function () {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
 </body>
 </html>
