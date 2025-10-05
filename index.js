@@ -92,7 +92,51 @@ app.get("/dashboard", (req, res) => {
 // Location viewer route - shows a map and detects user's current location
 app.get('/location', (req, res) => {
     if (!req.session.user) return res.redirect('/login');
-    res.render('location', { name: req.session.user.name });
+    res.render('location', { 
+        name: req.session.user.name,
+        forecast: null,
+        searchedLocation: null
+    });
+});
+
+// Handle destination weather forecast
+app.post('/location', async (req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+    const { destination, travelDate } = req.body;
+    
+    try {
+        // First get coordinates for the destination using Nominatim
+        const geocodeResponse = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destination)}`);
+        
+        if (geocodeResponse.data && geocodeResponse.data.length > 0) {
+            const { lat, lon } = geocodeResponse.data[0];
+            
+            // Fetch 7-day forecast from Open-Meteo
+            const forecastResponse = await axios.get(
+                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&timezone=auto`
+            );
+            
+            res.render('location', {
+                name: req.session.user.name,
+                forecast: forecastResponse.data,
+                searchedLocation: {
+                    name: destination,
+                    date: travelDate,
+                    display_name: geocodeResponse.data[0].display_name
+                }
+            });
+        } else {
+            throw new Error('Location not found');
+        }
+    } catch (error) {
+        console.error('Forecast error:', error);
+        res.render('location', {
+            name: req.session.user.name,
+            forecast: null,
+            searchedLocation: null,
+            error: 'Unable to get forecast for this location'
+        });
+    }
 });
 
 // GET /predict — Form page
