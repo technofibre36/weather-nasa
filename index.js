@@ -89,6 +89,12 @@ app.get("/dashboard", (req, res) => {
     res.render("dashboard", { name: req.session.user.name });
 });
 
+// Location viewer route - shows a map and detects user's current location
+app.get('/location', (req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+    res.render('location', { name: req.session.user.name });
+});
+
 // GET /predict — Form page
 app.get("/predict", (req, res) => {
     if (!req.session.user) return res.redirect("/login");
